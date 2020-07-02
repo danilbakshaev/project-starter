@@ -108,7 +108,7 @@ $(function() {
   body = document.querySelector('body');
   modalWrapper = document.querySelector('.modal-wrapper');
   modalWrapperBg = document.querySelector('.modal-wrapper__bg');
-  modalWrapperClose = document.querySelector('.modal-wrapper__close');
+  modalWrapperClose = document.querySelectorAll('.modal-wrapper__close');
 
   function openBaseModal() {
     body.classList.add('noflow');
@@ -130,9 +130,11 @@ $(function() {
     });
   };
 
-  modalWrapperClose.addEventListener('click', function () {
-    closeAllModal();
-  })
+  for(let i = 0; i<modalWrapperClose.length; i++){
+    modalWrapperClose[i].addEventListener('click', () => {
+      closeAllModal();
+    });
+  }
 
   modalWrapperBg.addEventListener('click', function () {
     closeAllModal();

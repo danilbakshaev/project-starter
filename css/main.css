@@ -375,8 +375,14 @@ img {
 /* Модальные окна */
 .noflow {
   overflow: hidden;
-  padding-right: 15px;
 }
+
+@media screen and (min-width: 1200px) {
+  .noflow {
+    padding-right: 15px;
+  }
+}
+
 .modal-wrapper__close{
   position: absolute;
   right: -30px;
@@ -443,4 +449,49 @@ img {
 }
 .modal-wrapper__left-menu.animation {
   transform: translateX(-100px);
+}
+
+/* Контейнер */
+.container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+@media screen and (max-width: 1440px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .container {
+    max-width: 1040px;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    max-width: 840px;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .container {
+    max-width: 740px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: calc(100% - 30px);
+    margin: 0 15px;
+  }
 }
