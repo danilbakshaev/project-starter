@@ -1,0 +1,26 @@
+/*! Общие стили */
+
+// Убираем outline со всего проекта
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+// Вытягиваем все картинки по ширине
+img {
+  width: 100%;
+  height: auto;
+}
+
+// Настройки body
+body {
+	min-width: 320px;
+	position: relative;
+	overflow-x: hidden;
+}
