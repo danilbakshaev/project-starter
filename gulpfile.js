@@ -2,7 +2,6 @@
 
 let preprocessor = 'scss', // Preprocessor (sass, scss, less, styl)
     fileswatch   = 'html,htm,txt,json,md,woff2', // List of files extensions for watching & hard reload (comma separated)
-    imageswatch  = 'jpg,jpeg,png,webp,svg', // List of images extensions for watching & compression (comma separated)
     baseDir      = 'app', // Base directory path without «/» at the end
     online       = true; // If «false» - Browsersync will work offline without internet connection
 
@@ -11,11 +10,6 @@ let paths = {
 	styles: {
 		src:  baseDir + '/' + preprocessor + '/main.*',
 		dest: baseDir + '/css',
-	},
-
-	images: {
-		src:  baseDir + '/images/src/**/*',
-		dest: baseDir + '/images/dest',
 	},
 
 	deploy: {
@@ -41,7 +35,6 @@ const concat       = require('gulp-concat');
 const browserSync  = require('browser-sync').create();
 const uglify       = require('gulp-uglify-es').default;
 const autoprefixer = require('gulp-autoprefixer');
-const imagemin     = require('gulp-imagemin');
 const newer        = require('gulp-newer');
 const rsync        = require('gulp-rsync');
 const del          = require('del');
@@ -64,17 +57,6 @@ function styles() {
 	.pipe(browserSync.stream())
 }
 
-function images() {
-	return src(paths.images.src)
-	.pipe(newer(paths.images.dest))
-	.pipe(imagemin())
-	.pipe(dest(paths.images.dest))
-}
-
-function cleanimg() {
-	return del('' + paths.images.dest + '/**/*', { force: true })
-}
-
 function deploy() {
 	return src(baseDir + '/')
 	.pipe(rsync({
@@ -92,16 +74,13 @@ function deploy() {
 
 function startwatch() {
 	watch(baseDir  + '/' + preprocessor + '/**/*', {usePolling: true}, styles);
-	watch(baseDir  + '/images/src/**/*.{' + imageswatch + '}', {usePolling: true}, images);
+	watch(baseDir + '/img/**/*').on('change', browserSync.reload);
 	watch(baseDir + '/js/**/*.js').on('change', browserSync.reload);
 	watch(baseDir  + '/**/*.{' + fileswatch + '}', {usePolling: true}).on('change', browserSync.reload);
 
 }
 
 exports.browsersync = browsersync;
-exports.assets      = series(cleanimg, styles, images);
 exports.styles      = styles;
-exports.images      = images;
-exports.cleanimg    = cleanimg;
 exports.deploy      = deploy;
-exports.default     = parallel(images, styles, browsersync, startwatch);
+exports.default     = parallel(styles, browsersync, startwatch);
