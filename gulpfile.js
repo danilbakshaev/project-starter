@@ -38,6 +38,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const newer        = require('gulp-newer');
 const rsync        = require('gulp-rsync');
 const del          = require('del');
+const fileInclude = require('gulp-file-include');
 
 function browsersync() {
 	browserSync.init({
@@ -45,6 +46,16 @@ function browsersync() {
 		notify: false,
 		online: online
 	})
+}
+// обрабатываем html проекта
+
+function fileinclude() {
+    return src(['app/html/*.html'])
+        .pipe(fileInclude({
+            prefix: '@@',
+            basepath: '@file'
+        }))
+        .pipe(dest('app/'))
 }
 
 function styles() {
@@ -74,13 +85,14 @@ function deploy() {
 
 function startwatch() {
 	watch(baseDir  + '/' + preprocessor + '/**/*', {usePolling: true}, styles);
+	watch(baseDir + '/html/**/*.html', {usePolling: true}, fileinclude);
 	watch(baseDir + '/img/**/*').on('change', browserSync.reload);
 	watch(baseDir + '/js/**/*.js').on('change', browserSync.reload);
 	watch(baseDir  + '/**/*.{' + fileswatch + '}', {usePolling: true}).on('change', browserSync.reload);
-
 }
 
+exports.fileinclude = fileinclude;
 exports.browsersync = browsersync;
 exports.styles      = styles;
 exports.deploy      = deploy;
-exports.default     = parallel(styles, browsersync, startwatch);
+exports.default     = parallel(styles, fileinclude, browsersync, startwatch);
