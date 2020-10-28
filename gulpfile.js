@@ -1,7 +1,7 @@
 // VARIABLES & PATHS
 
 let preprocessor = 'scss', // Preprocessor (sass, scss, less, styl)
-    fileswatch   = 'html,htm,txt,json,md,woff2', // List of files extensions for watching & hard reload (comma separated)
+    fileswatch   = 'txt,json,md,woff2', // List of files extensions for watching & hard reload (comma separated)
     baseDir      = 'app', // Base directory path without «/» at the end
     online       = true; // If «false» - Browsersync will work offline without internet connection
 
@@ -55,7 +55,8 @@ function fileinclude() {
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(dest('app/'))
+		.pipe(dest('app/'))
+		.pipe(browserSync.stream())
 }
 
 function styles() {
