@@ -21,20 +21,22 @@ button:focus,
 .btn:active:focus,
 .btn:focus,
 input {
-    outline: 0 !important;
-    outline-color: transparent !important;
-    outline-width: 0 !important;
-    outline-style: none !important;
-    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0) !important;
+  outline: 0 !important;
+  outline-color: transparent !important;
+  outline-width: 0 !important;
+  outline-style: none !important;
+  box-shadow: 0 0 0 0 rgba(0, 123, 255, 0) !important;
 }
 
-// Border-box на весь проект
+// Добавляем order-box на весь проект
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
@@ -48,7 +50,7 @@ img {
 
 // Настройки body
 body {
-	min-width: 320px;
-	position: relative;
-	overflow-x: hidden;
+  min-width: 320px;
+  position: relative;
+  // overflow-x: hidden; -- не добавлять, появляются проблемы
 }
